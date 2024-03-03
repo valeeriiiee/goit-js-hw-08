@@ -1,6 +1,7 @@
 import { galleryItems } from './gallery-items.js';
+var lightbox = new SimpleLightbox('.gallery-items.js');
 
-// Creating and rendering markup from the galleryItems data array and provided gallery item template.
+// Creating and rendering markup from the galleryItems data array and provided gallery element template. Use the ready-made code from the first task
 const gallery = document.querySelector('.gallery');
 
 function createGalleryItem(item) {
@@ -33,43 +34,19 @@ function renderGallery(items) {
 
 renderGallery(galleryItems);
 
-// Implementing delegation to ul.gallery and getting the URL of a large image
-gallery.addEventListener('click', e => {
-  e.preventDefault();
-  if (e.target.tagName === 'IMG') {
-    const largeImageUrl = e.target.dataset.source;
-    // Call function to open modal window with the large image
-    openModal(largeImageUrl);
-  }
-});
+// Library initialization after gallery items are created and added to ul.gallery
+document.addEventListener('DOMContentLoaded', function () {
+    const lightbox = new SimpleLightbox('.gallery a', {
+      /* Configuration options will go here */
+    });
+  });  
 
-// Opening a modal window by clicking on a gallery item
-function openModal(imageUrl) {
-  const instance = basicLightbox.create(`
-    <img src="${imageUrl}" width="800" height="600">
-`).show();
-}
-
-// Replacing the value of the src attribute of the <img> element in a modal window before opening
-galleryList.addEventListener('click', e => {
-  e.preventDefault();
-  const link = e.target.closest('.gallery__link');
-  if (!link) return;
-
-  const largeImageURL = link.getAttribute('href');
-
-  const instance = basicLightbox.create(`
-    <img src="${largeImageURL}" width="800" height="600">
-  `);
-
-  instance.show();
-});
-
-// Closing from keyboard
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    basicLightbox.close();
-  }
-});
+// Look in the documentation for the Options section and add image caption display from the alt attribute. Let the caption be at the bottom and appear 250 milliseconds after image
+document.addEventListener('DOMContentLoaded', function () {
+    const lightbox = new SimpleLightbox('.gallery a', {
+      captions: true, // Enable captions
+      captionDelay: 250 // Delay before displaying captions in milliseconds
+    });
+  });  
 
 console.log(galleryItems);
